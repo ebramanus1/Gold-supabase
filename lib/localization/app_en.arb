@@ -1,0 +1,11 @@
+{
+    "@@locale": "en",
+    "appTitle": "Gold Workshop Manager",
+    "login": "Login",
+    "username": "Username",
+    "password": "Password",
+    "invalidCredentials": "Invalid credentials",
+    "homeScreen": "Home Screen",
+    "welcomeMessage": "Welcome to Gold Workshop Manager!"
+}
+

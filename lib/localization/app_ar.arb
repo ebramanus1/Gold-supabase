@@ -1,0 +1,12 @@
+
+{
+    "@@locale": "ar",
+    "appTitle": "مدير ورشة الذهب",
+    "login": "تسجيل الدخول",
+    "username": "اسم المستخدم",
+    "password": "كلمة المرور",
+    "invalidCredentials": "بيانات اعتماد غير صحيحة",
+    "homeScreen": "الشاشة الرئيسية",
+    "welcomeMessage": "مرحباً بك في مدير ورشة الذهب!"
+}
+
