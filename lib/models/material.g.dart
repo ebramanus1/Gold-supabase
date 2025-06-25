@@ -1,27 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'gold_item.dart';
+part of 'material.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-GoldItem _$GoldItemFromJson(Map<String, dynamic> json) => GoldItem(
+Material _$MaterialFromJson(Map<String, dynamic> json) => Material(
   id: json['id'] as String,
   name: json['name'] as String,
-  materialId: json['materialId'] as String,
   karat: json['karat'] as String,
-  weight: (json['weight'] as num).toDouble(),
-  status: json['status'] as String,
   createdAt: DateTime.parse(json['createdAt'] as String),
 );
 
-Map<String, dynamic> _$GoldItemToJson(GoldItem instance) => <String, dynamic>{
+Map<String, dynamic> _$MaterialToJson(Material instance) => <String, dynamic>{
   'id': instance.id,
   'name': instance.name,
-  'materialId': instance.materialId,
   'karat': instance.karat,
-  'weight': instance.weight,
-  'status': instance.status,
   'createdAt': instance.createdAt.toIso8601String(),
 };

@@ -3,10 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'blocs/auth/auth_bloc.dart';
-import 'screens/home_screen.dart';
-import 'screens/login_screen.dart';
-import 'localization/app_localizations.dart';
+import 'package:gold_workshop_manager/blocs/auth/auth_bloc.dart';
+import 'package:gold_workshop_manager/blocs/material/material_bloc.dart';
+import 'package:gold_workshop_manager/blocs/gold_item/gold_item_bloc.dart';
+import 'package:gold_workshop_manager/blocs/transaction/transaction_bloc.dart';
+import 'package:gold_workshop_manager/screens/home_screen.dart';
+import 'package:gold_workshop_manager/screens/login_screen.dart';
+import 'package:gold_workshop_manager/screens/material_screen.dart';
+import 'package:gold_workshop_manager/screens/gold_item_screen.dart';
+import 'package:gold_workshop_manager/screens/report_screen.dart';
+import 'package:gold_workshop_manager/localization/app_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 // إضافة استيراد dart:io فقط إذا لم يكن التطبيق ويب
@@ -35,7 +41,7 @@ Future<void> main() async {
   try {
     await Supabase.initialize(
       url: kIsWeb ? 'https://lhqkhseyqrhkdjvgmgdw.supabase.co' : dotenv.env['SUPABASE_URL']!,
-      anonKey: kIsWeb ? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxocWtoaHNleXFyaGtkanZnbWdkdyIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzUwODAwNzI4LCJleHAiOjIwNjYzNzY3Mjh9.EzlPp_w1wdjbCwo7q0h-WsnZYvQUZ_DgJScMZnLd0Yc' : dotenv.env['SUPABASE_ANON_KEY']!,
+      anonKey: kIsWeb ? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxocWtoaHNleXFyaGtkanZnbWdkdyIsInJvbGU6ImFub24iLCJpYXQiOjE3NTA4MDA3MjgsImV4cCI6MjA2NjM3NjcyOH0.EzlPp_w1wdjbCwo7q0h-WsnZYvQUZ_DgJScMZnLd0Yc' : dotenv.env['SUPABASE_ANON_KEY']!,
     );
   } catch (e) {
     runApp(MaterialApp(
@@ -65,6 +71,24 @@ final GoRouter _router = GoRouter(
         return const LoginScreen();
       },
     ),
+    GoRoute(
+      path: '/materials',
+      builder: (BuildContext context, GoRouterState state) {
+        return const MaterialScreen();
+      },
+    ),
+    GoRoute(
+      path: '/gold_items',
+      builder: (BuildContext context, GoRouterState state) {
+        return const GoldItemScreen();
+      },
+    ),
+    GoRoute(
+      path: '/reports',
+      builder: (BuildContext context, GoRouterState state) {
+        return const ReportScreen();
+      },
+    ),
   ],
 );
 
@@ -77,6 +101,15 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<AuthBloc>(
           create: (BuildContext context) => AuthBloc(),
+        ),
+        BlocProvider<MaterialBloc>(
+          create: (BuildContext context) => MaterialBloc(),
+        ),
+        BlocProvider<GoldItemBloc>(
+          create: (BuildContext context) => GoldItemBloc(),
+        ),
+        BlocProvider<TransactionBloc>(
+          create: (BuildContext context) => TransactionBloc(),
         ),
       ],
       child: MaterialApp.router(

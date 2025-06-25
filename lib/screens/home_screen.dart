@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(appLocalizations.homeScreen),
+        title: Text(appLocalizations.appTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -34,6 +34,24 @@ class HomeScreen extends StatelessWidget {
           children: [
             Text(appLocalizations.welcomeMessage),
             GoldPriceCard(),
+            ElevatedButton(
+              onPressed: () {
+                context.go('/materials');
+              },
+              child: const Text('إدارة المواد الخام'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                context.go('/gold_items');
+              },
+              child: const Text('إدارة القطع الذهبية'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                context.go('/reports');
+              },
+              child: const Text('التقارير'),
+            ),
           ],
         ),
       ),

@@ -7,6 +7,7 @@ class GoldItem {
   final String id;
   final String name;
   final String materialId;
+  final String karat;
   final double weight;
   final String status;
   final DateTime createdAt;
@@ -15,6 +16,7 @@ class GoldItem {
     required this.id,
     required this.name,
     required this.materialId,
+    required this.karat,
     required this.weight,
     required this.status,
     required this.createdAt,

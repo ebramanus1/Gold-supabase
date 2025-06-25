@@ -11,8 +11,8 @@
 - مصادقة المستخدم: تأمين مصادقة المستخدم لضمان خصوصية البيانات والتحكم في الوصول.
 - تصميم متجاوب: يعمل بسلاسة عبر مختلف الأجهزة وأحجام الشاشات.
 - واجهة مستخدم بديهية: واجهة سهلة الاستخدام للتنقل والتفاعل.
-- دعم الباركود: القدرة على مسح الباركود لتتبع العناصر.
-- التكامل مع الموازين الرقمية: ربط التطبيق بالموازين الرقمية لتسجيل أوزان الذهب بدقة.
+- دعم الباركود: القدرة على مسح الباركود لتتبع العناصر (ميزة مستقبلية).
+- التكامل مع الموازين الرقمية: ربط التطبيق بالموازين الرقمية لتسجيل أوزان الذهب بدقة (ميزة مستقبلية).
 - تتبع المواد الخام: إدارة وتتبع المواد الخام الذهبية.
 - سجلات الإدخال/الإخراج: تسجيل حركة دخول وخروج الذهب.
 - تقارير الجرد: إنشاء تقارير مفصلة عن المخزون.
@@ -32,8 +32,8 @@
 
 1.  **استنساخ المستودع:**
     ```bash
-    git clone https://github.com/your_username/GoldWorkshopManager.git
-    cd GoldWorkshopManager
+    git clone https://github.com/ebramanus1/Gold-supabase.git gold_workshop_manager
+    cd gold_workshop_manager
     ```
 
 2.  **تثبيت التبعيات:**
@@ -43,8 +43,60 @@
 
 3.  **إعداد Supabase:**
     - أنشئ مشروعًا جديدًا في Supabase.
-    - قم بتحديث ملف `.env` في جذر المشروع باستخدام `SUPABASE_URL` و `SUPABASE_ANON_KEY` الخاصين بك.
-    - قم بتشغيل سكربتات SQL الموجودة في مجلد `supabase_sql` لإنشاء الجداول المطلوبة.
+    - قم بتحديث ملف `.env` في جذر المشروع باستخدام `SUPABASE_URL` و `SUPABASE_ANON_KEY` الخاصين بك. (تم تحديثه بالفعل في هذا الإصدار)
+    - قم بتشغيل سكربتات SQL التالية في محرر SQL الخاص بـ Supabase لإنشاء الجداول المطلوبة:
+
+    **users.sql:**
+    ```sql
+    CREATE TABLE users (
+      id UUID PRIMARY KEY REFERENCES auth.users(id),
+      username TEXT UNIQUE NOT NULL,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    );
+    ```
+
+    **materials.sql:**
+    ```sql
+    CREATE TABLE materials (
+      id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+      name TEXT UNIQUE NOT NULL,
+      karat TEXT NOT NULL,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    );
+    ```
+
+    **items.sql:**
+    ```sql
+    CREATE TABLE items (
+      id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+      name TEXT NOT NULL,
+      material_id UUID REFERENCES materials(id),
+      weight DECIMAL(10, 3) NOT NULL,
+      status TEXT NOT NULL,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    );
+    ```
+
+    **entries.sql:**
+    ```sql
+    CREATE TABLE entries (
+      id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+      item_id UUID REFERENCES items(id),
+      quantity INT NOT NULL,
+      entry_date TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    );
+    ```
+
+    **outputs.sql:**
+    ```sql
+    CREATE TABLE outputs (
+      id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+      item_id UUID REFERENCES items(id),
+      quantity INT NOT NULL,
+      output_date TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    );
+    ```
+    - تأكد من تفعيل Realtime Listener في Supabase للجداول التي ترغب في الحصول على تحديثات فورية منها (مثل `items`, `entries`, `outputs`).
 
 4.  **توليد ملفات الترجمة و JSON:**
     ```bash
@@ -93,5 +145,3 @@
 -   **النسخ الاحتياطي:** تأكد من أن وظائف النسخ الاحتياطي تعمل بشكل صحيح وقم باختبار استعادة البيانات بشكل دوري.
 
 
-
-# Gold-supabase
